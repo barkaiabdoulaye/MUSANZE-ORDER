@@ -1,22 +1,22 @@
-// Récupérer les éléments
-let qte = document.getElementById('qte');
-let prix = document.getElementById('prix');
-let totalSpan = document.getElementById('totalLive');
+const quantity = document.getElementById("quantity");
+const price = document.getElementById("price");
+const totalDisplay = document.getElementById("total");
 
-// Fonction de calcul
-function calculerTotal() {
-    totalSpan.textContent = qte.value * prix.value;
+function calculateTotal() {
+    const q = parseFloat(quantity.value) || 0;
+    const p = parseFloat(price.value) || 0;
+
+    const total = q * p;
+    totalDisplay.textContent = total;
 }
 
-// Calcul en direct
-qte.oninput = calculerTotal;
-prix.oninput = calculerTotal;
+quantity.addEventListener("input", calculateTotal);
+price.addEventListener("input", calculateTotal);
+const form = document.getElementById("orderForm");
 
-// Validation avant envoi
-document.querySelector('form').onsubmit = function() {
-    if (qte.value < 1 || prix.value < 50) {
-        alert("Quantité min 1kg, Prix min 50 RWF");
-        return false;
+form.addEventListener("submit", function(event) {
+    if (quantity.value <= 0 || price.value <= 0) {
+        alert("Quantity and price must be greater than 0");
+        event.preventDefault();
     }
-    return true;
-}
+});
